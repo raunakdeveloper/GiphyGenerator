@@ -10,7 +10,6 @@ const RandomSearch = () => {
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Fetch GIFs based on the search term
   async function getGifUrl(term) {
     setIsLoading(true);
     setError(null);
@@ -18,7 +17,12 @@ const RandomSearch = () => {
       const url = `https://api.giphy.com/v1/gifs/search?api_key=${API_KEY_SEARCH}&q=${term}&limit=1&offset=0&rating=g&lang=en`;
       const response = await axios.get(url);
       const image = response.data.data[0]?.images.original.url;
-      setGifUrl(image);
+
+      if (image) {
+        setGifUrl(image);
+      } else {
+        setError("No GIFs found for this keyword. Try another search.");
+      }
     } catch (error) {
       if (error.response) {
         if (error.response.status === 429) {
@@ -37,10 +41,10 @@ const RandomSearch = () => {
 
   const clickHandler = () => {
     if (searchTerm) {
-      setGifUrl(null); // Reset gifUrl before fetching
+      setGifUrl(null); 
       getGifUrl(searchTerm);
     } else {
-      setError("Please enter a search term."); // Set error if input is empty
+      setError("Please enter a search term.");
     }
   };
 
@@ -53,7 +57,7 @@ const RandomSearch = () => {
           type="text"
           placeholder="Enter search term"
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)} // Update search term on input change
+          onChange={(e) => setSearchTerm(e.target.value)}
           className="w-full px-3 py-2 border border-gray-300 rounded-md mb-0 mr-2"
         />
         <button
@@ -68,15 +72,15 @@ const RandomSearch = () => {
         {isLoading ? (
           <Spinner />
         ) : error ? (
-          <p className="text-red-500">{error}</p> // Show error message
+          <p className="text-red-500">{error}</p>
         ) : gifUrl ? (
           <img
             src={gifUrl}
             alt="Random Gif"
-            className="w-[350px] h-[300px] object-contain" // Changed to object-contain for better fitting
+            className="w-[350px] h-[300px] object-contain"
           />
         ) : (
-          <p className="text-gray-500">Please enter a search term above.</p> // Message when input is empty
+          <p className="text-gray-500">Please enter a search term above.</p> 
         )}
       </div>
     </div>

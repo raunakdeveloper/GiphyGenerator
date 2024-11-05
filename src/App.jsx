@@ -37,7 +37,6 @@ const App = () => {
         </button>
       </div>
       <div className="mt-2 w-full max-w-[600px]">
-        {/* <Random /> */}
         {isactiveButton === "random" ? <Random /> : <RandomSearch />}
       </div>
     </div>
