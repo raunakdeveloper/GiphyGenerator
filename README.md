@@ -32,4 +32,3 @@ This is a simple Giphy Generator app built with React. The app lets users genera
 4. Open [localhost](http://localhost:3000) in your browser.
 
 Enjoy exploring GIFs!
-```
